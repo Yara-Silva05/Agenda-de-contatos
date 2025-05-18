@@ -6,9 +6,10 @@ public class Main {
         boolean continuar = true;
         Scanner sc = new Scanner(System.in);
 
-        int[] codigos = new int[10];
-        String[] nomes = new String[10];
-        int[] telefones = new int[10];
+        int TAMANHO_LISTAS = 10;
+        int[] codigos = new int[TAMANHO_LISTAS];
+        String[] nomes = new String[TAMANHO_LISTAS];
+        int[] telefones = new int[TAMANHO_LISTAS];
 
 
         while (continuar) {
@@ -92,6 +93,27 @@ public class Main {
 
         }catch (Exception erro) {
             System.out.println("Limite de contatos cadastrados esgotado");
+        }
+    }
+
+    public static void listaDeContatos(int TAMANHO_LISTAS, int[] codigos, String[] nomes, int[] telefones){
+
+        System.out.println("=========================================");
+        System.out.println("Listar todos os contatos");
+        System.out.println("=========================================");
+
+        boolean existemContatos = false;
+        for (int i = 0; i < TAMANHO_LISTAS; i++){
+            if (codigos[i] != 0){
+                existemContatos = true;
+                System.out.println("Código do contato: " + codigos[i]);
+                System.out.println("Nome do contato: " + nomes[i]);
+                System.out.println("Telefone do contato: " + telefones[i]);
+                System.out.println("=========================================");
+            }
+        }
+        if (!existemContatos){
+            System.out.println("Não há contatos cadastrados na Agenda de Contatos.");
         }
     }
 }
