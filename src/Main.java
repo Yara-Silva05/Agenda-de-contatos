@@ -24,13 +24,20 @@ public class Main {
 
                         sc.nextLine();
 
-                        System.out.println("Informe o nome do contato:");
-                        String nome = sc.nextLine();
+                        if (codigo != 0) {
+                            System.out.println("Informe o nome do contato:");
+                            String nome = sc.nextLine();
 
-                        System.out.println("Informe o telefone do contato:");
-                        int telefone = sc.nextInt();
+                            System.out.println("Informe o telefone do contato:");
+                            int telefone = sc.nextInt();
 
-                        cadastrarContato(codigo, nome, telefone, codigos, nomes, telefones);
+                            sc.nextLine();
+
+                            cadastrarContato(codigo, nome, telefone, codigos, nomes, telefones);
+
+                        } else {
+                            System.out.println("ERRO: o código cadastrado não pode ser igual a 0 (zero)");
+                        }
 
                         break;
                     case 2:
@@ -85,27 +92,27 @@ public class Main {
 
         int i = 0;
         try {
-            while(codigos[i] != 0) {
+            while (codigos[i] != 0) {
                 i++;
             }
             codigos[i] = codigo;
             nomes[i] = nome;
             telefones[i] = telefone;
 
-        }catch (Exception erro) {
+        } catch (Exception erro) {
             System.out.println("Limite de contatos cadastrados esgotado");
         }
     }
 
-    public static void listaDeContatos(int TAMANHO_LISTAS, int[] codigos, String[] nomes, int[] telefones){
+    public static void listaDeContatos(int TAMANHO_LISTAS, int[] codigos, String[] nomes, int[] telefones) {
 
         System.out.println("=========================================");
         System.out.println("Listar todos os contatos");
         System.out.println("=========================================");
 
         boolean existemContatos = false;
-        for (int i = 0; i < TAMANHO_LISTAS; i++){
-            if (codigos[i] != 0){
+        for (int i = 0; i < TAMANHO_LISTAS; i++) {
+            if (codigos[i] != 0) {
                 existemContatos = true;
                 System.out.println("Código do contato: " + codigos[i]);
                 System.out.println("Nome do contato: " + nomes[i]);
@@ -113,7 +120,7 @@ public class Main {
                 System.out.println("=========================================");
             }
         }
-        if (!existemContatos){
+        if (!existemContatos) {
             System.out.println("Não há contatos cadastrados na Agenda de Contatos.");
         }
     }
