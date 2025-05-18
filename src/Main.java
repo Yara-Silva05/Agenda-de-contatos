@@ -40,7 +40,7 @@ public class Main {
                         System.out.println("");
                         break;
                     case 4:
-                        System.out.println("");
+                        listaDeContatos(TAMANHO_LISTAS, codigos, nomes, telefones);
                         break;
                     case 5:
                         System.out.println("");
@@ -58,6 +58,7 @@ public class Main {
 
             } catch (Exception erro) {
                 System.out.println("Erro de leitura. Escreva uma opção válida :D");
+                sc.nextLine();
             }
 
         }
