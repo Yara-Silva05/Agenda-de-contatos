@@ -19,6 +19,10 @@ public class Main {
                 int opcao = sc.nextInt();
                 switch (opcao) {
                     case 1:
+                        System.out.println("=========================================");
+                        System.out.println("               NOVO CONTATO              ");
+                        System.out.println("=========================================");
+
                         System.out.println("Informe o código do contato:");
                         int codigo = sc.nextInt();
 
@@ -35,18 +39,49 @@ public class Main {
 
                             cadastrarContato(codigo, nome, telefone, codigos, nomes, telefones);
 
+                            System.out.println("Contato com o CÓDIGO: " + codigo + " cadastrado com sucesso.");
+
                         } else {
                             System.out.println("ERRO: o código cadastrado não pode ser igual a 0 (zero)");
                         }
 
                         break;
                     case 2:
-                        System.out.println("");
+                        System.out.println("=========================================");
+                        System.out.println("            ALTERAR CONTATO              ");
+                        System.out.println("=========================================");
+
+                        System.out.println("Informe o código do contato:");
+                        codigo = sc.nextInt();
+
+                        sc.nextLine();
+
+                        if (codigo != 0){
+                            try{
+                                System.out.println("Informe o nome do contato:");
+                                String nome = sc.nextLine();
+
+                                System.out.println("Informe o telefone do contato:");
+                                int telefone = sc.nextInt();
+
+                                sc.nextLine();
+                                alterarContato(retornaIndexPorCodigo(TAMANHO_LISTAS, codigo, codigos), nome, telefone, nomes, telefones);
+                                System.out.println("Contato com o CÓDIGO: " + codigo + " alterado com sucesso.");
+                            }
+
+                            catch (Exception erro){
+                                System.out.println(erro.getMessage());
+                            }
+                        }
                         break;
                     case 3:
                         System.out.println("");
                         break;
                     case 4:
+                        System.out.println("=========================================");
+                        System.out.println("         LISTAR TODOS OS CONTATOS        ");
+                        System.out.println("=========================================");
+
                         listaDeContatos(TAMANHO_LISTAS, codigos, nomes, telefones);
                         break;
                     case 5:
@@ -67,11 +102,8 @@ public class Main {
                 System.out.println("Erro de leitura. Escreva uma opção válida :D");
                 sc.nextLine();
             }
-
         }
-
     }
-
     public static void mostrarMenu() {
 
         System.out.println("=========================================");
@@ -104,11 +136,12 @@ public class Main {
         }
     }
 
-    public static void listaDeContatos(int TAMANHO_LISTAS, int[] codigos, String[] nomes, int[] telefones) {
+    public static void alterarContato(int index, String nome, int telefone, String[] nomes, int[] telefones){
+        nomes[index] = nome;
+        telefones[index] = telefone;
+    }
 
-        System.out.println("=========================================");
-        System.out.println("Listar todos os contatos");
-        System.out.println("=========================================");
+    public static void listaDeContatos(int TAMANHO_LISTAS, int[] codigos, String[] nomes, int[] telefones) {
 
         boolean existemContatos = false;
         for (int i = 0; i < TAMANHO_LISTAS; i++) {
@@ -123,5 +156,14 @@ public class Main {
         if (!existemContatos) {
             System.out.println("Não há contatos cadastrados na Agenda de Contatos.");
         }
+    }
+
+    public static int retornaIndexPorCodigo (int TAMANHO_LISTAS, int codigo, int[] codigos) throws Exception {
+        for (int i = 0; i < TAMANHO_LISTAS; i++){
+            if (codigos[i] == codigo){
+                return i;
+            }
+        }
+        throw new Exception("O código pesquisado não está cadastrado.");
     }
 }
