@@ -11,7 +11,6 @@ public class Main {
         String[] nomes = new String[TAMANHO_LISTAS];
         int[] telefones = new int[TAMANHO_LISTAS];
 
-
         while (continuar) {
             mostrarMenu();
 
@@ -39,9 +38,7 @@ public class Main {
 
                             sc.nextLine();
 
-                            cadastrarContato(codigo, nome, telefone, codigos, nomes, telefones);
-
-                            System.out.println("Contato com o CÓDIGO: " + codigo + " cadastrado com sucesso.");
+                            cadastrarContato(TAMANHO_LISTAS, codigo, nome, telefone, codigos, nomes, telefones);
 
                         } else {
                             System.out.println("ERRO: o código cadastrado não pode ser igual a 0 (zero)");
@@ -118,7 +115,6 @@ public class Main {
                             int index = retornaIndexPorCodigo(TAMANHO_LISTAS, codigo, codigos);
                             mostrarContato(index, codigos, nomes, telefones);
 
-                            sc.nextLine();
                         } catch (Exception erro) {
                             System.out.println(erro.getMessage());
                         }
@@ -133,7 +129,7 @@ public class Main {
                         String nome = sc.nextLine();
 
                         try {
-                            listarContatosPorNome (TAMANHO_LISTAS, nome, codigos, nomes, telefones);
+                            listarContatosPorNome(TAMANHO_LISTAS, nome, codigos, nomes, telefones);
                         } catch (Exception erro) {
                             System.out.println(erro.getMessage());
                         }
@@ -171,19 +167,33 @@ public class Main {
         System.out.print("Escolha a Opção: ");
     }
 
-    public static void cadastrarContato(int codigo, String nome, int telefone, int[] codigos, String[] nomes, int[] telefones) {
+    public static void cadastrarContato(int TAMANHO_LISTAS, int codigo, String nome, int telefone, int[] codigos, String[] nomes, int[] telefones) {
+        boolean codigoCadastrado = false;
 
-        int i = 0;
         try {
-            while (codigos[i] != 0) {
-                i++;
+            for (int i = 0; i < TAMANHO_LISTAS; i++) {
+                if (codigo == codigos[i]) {
+                    codigoCadastrado = true;
+                    break;
+                }
             }
-            codigos[i] = codigo;
-            nomes[i] = nome;
-            telefones[i] = telefone;
+            if (!codigoCadastrado) {
+                int i = 0;
 
+                while (codigos[i] != 0) {
+                    i++;
+                }
+
+                codigos[i] = codigo;
+                nomes[i] = nome;
+                telefones[i] = telefone;
+
+                System.out.println("Contato com o CÓDIGO: " + codigo + " cadastrado com sucesso.");
+            } else {
+                System.out.println("ERRO: Código de contato já cadastrado.");
+            }
         } catch (Exception erro) {
-            System.out.println("Limite de contatos cadastrados esgotado");
+            System.out.println("Limite de contatos cadastrados esgotado.");
         }
     }
 
@@ -204,10 +214,7 @@ public class Main {
         for (int i = 0; i < TAMANHO_LISTAS; i++) {
             if (codigos[i] != 0) {
                 existemContatos = true;
-                System.out.println("Código do contato: " + codigos[i]);
-                System.out.println("Nome do contato: " + nomes[i]);
-                System.out.println("Telefone do contato: " + telefones[i]);
-                System.out.println("=========================================");
+                mostrarContato(i, codigos, nomes, telefones);
             }
         }
         if (!existemContatos) {
@@ -233,10 +240,10 @@ public class Main {
         throw new Exception("O código pesquisado não está cadastrado.");
     }
 
-    public static void listarContatosPorNome (int TAMANHO_LISTAS, String nome, int[] codigos, String[] nomes, int[] telefones){
+    public static void listarContatosPorNome(int TAMANHO_LISTAS, String nome, int[] codigos, String[] nomes, int[] telefones) {
         boolean existemContatos = false;
         for (int i = 0; i < TAMANHO_LISTAS; i++) {
-            if (nomes[i] != null){
+            if (nomes[i] != null) {
                 if (nomes[i].toLowerCase().contains(nome.toLowerCase())) {
                     existemContatos = true;
                     mostrarContato(i, codigos, nomes, telefones);
