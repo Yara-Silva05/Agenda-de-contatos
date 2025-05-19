@@ -46,6 +46,7 @@ public class Main {
                         }
 
                         break;
+
                     case 2:
                         System.out.println("=========================================");
                         System.out.println("            ALTERAR CONTATO              ");
@@ -74,6 +75,7 @@ public class Main {
                             }
                         }
                         break;
+
                     case 3:
                         System.out.println("=========================================");
                         System.out.println("            EXCLUIR CONTATO             ");
@@ -99,12 +101,39 @@ public class Main {
 
                         listaDeContatos(TAMANHO_LISTAS, codigos, nomes, telefones);
                         break;
+
                     case 5:
-                        System.out.println("");
+                        System.out.println("=========================================");
+                        System.out.println("      LISTAR POR CÓDIGO DE CONTATO       ");
+                        System.out.println("=========================================");
+
+                        System.out.println("Informe o código do contato:");
+                        codigo = sc.nextInt();
+
+                        sc.nextLine();
+
+                        try {
+                            int index = retornaIndexPorCodigo(TAMANHO_LISTAS, codigo, codigos);
+                            mostrarContato(index, codigos, nomes, telefones);
+
+                            sc.nextLine();
+                        } catch (Exception erro) {
+                            System.out.println(erro.getMessage());
+                        }
                         break;
+
                     case 6:
-                        System.out.println("");
+                        System.out.println("=========================================");
+                        System.out.println("      LISTAR POR CÓDIGO DE CONTATO       ");
+                        System.out.println("=========================================");
+
+                        System.out.println("Informe o código do contato:");
+                        codigo = sc.nextInt();
+
+                        sc.nextLine();
+
                         break;
+
                     case 7:
                         continuar = false;
                         System.out.println("Programa encerrado.");
@@ -180,9 +209,18 @@ public class Main {
         }
     }
 
+    public static void mostrarContato(int index, int[] codigos, String[] nomes, int[] telefones) {
+
+        System.out.println("Código do contato: " + codigos[index]);
+        System.out.println("Nome do contato: " + nomes[index]);
+        System.out.println("Telefone do contato: " + telefones[index]);
+        System.out.println("=========================================");
+
+    }
+
     public static int retornaIndexPorCodigo(int TAMANHO_LISTAS, int codigo, int[] codigos) throws Exception {
         for (int i = 0; i < TAMANHO_LISTAS; i++) {
-            if (codigos[i] == codigo) {
+            if (codigos[i] == codigo && codigos[i] != 0) {
                 return i;
             }
         }
