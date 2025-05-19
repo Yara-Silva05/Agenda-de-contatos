@@ -56,8 +56,10 @@ public class Main {
 
                         sc.nextLine();
 
-                        if (codigo != 0){
-                            try{
+                        if (codigo != 0) {
+                            try {
+                                int index = retornaIndexPorCodigo(TAMANHO_LISTAS, codigo, codigos);
+
                                 System.out.println("Informe o nome do contato:");
                                 String nome = sc.nextLine();
 
@@ -65,17 +67,30 @@ public class Main {
                                 int telefone = sc.nextInt();
 
                                 sc.nextLine();
-                                alterarContato(retornaIndexPorCodigo(TAMANHO_LISTAS, codigo, codigos), nome, telefone, nomes, telefones);
+                                alterarContato(index, nome, telefone, nomes, telefones);
                                 System.out.println("Contato com o CÓDIGO: " + codigo + " alterado com sucesso.");
-                            }
-
-                            catch (Exception erro){
+                            } catch (Exception erro) {
                                 System.out.println(erro.getMessage());
                             }
                         }
                         break;
                     case 3:
-                        System.out.println("");
+                        System.out.println("=========================================");
+                        System.out.println("            EXCLUIR CONTATO             ");
+                        System.out.println("=========================================");
+
+                        System.out.println("Informe o código do contato:");
+                        codigo = sc.nextInt();
+
+                        sc.nextLine();
+
+                        try {
+                            excluirContato(retornaIndexPorCodigo(TAMANHO_LISTAS, codigo, codigos), codigos, nomes, telefones);
+
+                            System.out.println("Contato com o CÓDIGO: " + codigo + " excluído com sucesso.");
+                        } catch (Exception erro) {
+                            System.out.println(erro.getMessage());
+                        }
                         break;
                     case 4:
                         System.out.println("=========================================");
@@ -104,6 +119,7 @@ public class Main {
             }
         }
     }
+
     public static void mostrarMenu() {
 
         System.out.println("=========================================");
@@ -136,9 +152,15 @@ public class Main {
         }
     }
 
-    public static void alterarContato(int index, String nome, int telefone, String[] nomes, int[] telefones){
+    public static void alterarContato(int index, String nome, int telefone, String[] nomes, int[] telefones) {
         nomes[index] = nome;
         telefones[index] = telefone;
+    }
+
+    public static void excluirContato(int index, int[] codigos, String[] nomes, int[] telefones) {
+        codigos[index] = 0;
+        nomes[index] = "";
+        telefones[index] = 0;
     }
 
     public static void listaDeContatos(int TAMANHO_LISTAS, int[] codigos, String[] nomes, int[] telefones) {
@@ -158,12 +180,13 @@ public class Main {
         }
     }
 
-    public static int retornaIndexPorCodigo (int TAMANHO_LISTAS, int codigo, int[] codigos) throws Exception {
-        for (int i = 0; i < TAMANHO_LISTAS; i++){
-            if (codigos[i] == codigo){
+    public static int retornaIndexPorCodigo(int TAMANHO_LISTAS, int codigo, int[] codigos) throws Exception {
+        for (int i = 0; i < TAMANHO_LISTAS; i++) {
+            if (codigos[i] == codigo) {
                 return i;
             }
         }
         throw new Exception("O código pesquisado não está cadastrado.");
     }
 }
+
