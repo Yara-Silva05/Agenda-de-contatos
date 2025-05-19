@@ -17,6 +17,8 @@ public class Main {
 
             try {
                 int opcao = sc.nextInt();
+                sc.nextLine();
+
                 switch (opcao) {
                     case 1:
                         System.out.println("=========================================");
@@ -124,13 +126,17 @@ public class Main {
 
                     case 6:
                         System.out.println("=========================================");
-                        System.out.println("      LISTAR POR CÓDIGO DE CONTATO       ");
+                        System.out.println("       LISTAR POR NOME DE CONTATO        ");
                         System.out.println("=========================================");
 
-                        System.out.println("Informe o código do contato:");
-                        codigo = sc.nextInt();
+                        System.out.println("Informe o nome do contato:");
+                        String nome = sc.nextLine();
 
-                        sc.nextLine();
+                        try {
+                            listarContatosPorNome (TAMANHO_LISTAS, nome, codigos, nomes, telefones);
+                        } catch (Exception erro) {
+                            System.out.println(erro.getMessage());
+                        }
 
                         break;
 
@@ -225,6 +231,21 @@ public class Main {
             }
         }
         throw new Exception("O código pesquisado não está cadastrado.");
+    }
+
+    public static void listarContatosPorNome (int TAMANHO_LISTAS, String nome, int[] codigos, String[] nomes, int[] telefones){
+        boolean existemContatos = false;
+        for (int i = 0; i < TAMANHO_LISTAS; i++) {
+            if (nomes[i] != null){
+                if (nomes[i].toLowerCase().contains(nome.toLowerCase())) {
+                    existemContatos = true;
+                    mostrarContato(i, codigos, nomes, telefones);
+                }
+            }
+        }
+        if (!existemContatos) {
+            System.out.println("Este nome não está cadastrado na Agenda de Contatos.");
+        }
     }
 }
 
